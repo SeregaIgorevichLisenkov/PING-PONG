@@ -1,5 +1,11 @@
 from pygame import *
 
+mixer.init()
+mixer.music.load('The Prodigy - Invaders Must Die.mp3')
+mixer.music.play()
+tuk = mixer.Sound('fire.ogg')
+mixer.music.set_volume(0.1)
+
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, size_x, size_y, player_speed):
         sprite.Sprite.__init__(self)
@@ -30,9 +36,9 @@ class Player(GameSprite):
             self.rect.y += self.speed
 
 # (self, player_image, player_x, player_y, size_x, size_y, player_speed)
-rocket_1 = Player("rocket_1.png", 25, 200, 25, 150, 5) 
-rocket_2 = Player("rocket_1.png", 550, 200, 25, 150, 5) 
-ball = GameSprite("ball.png",  200, 200, 50, 50, 5)
+rocket_1 = Player("rocket_1.png", 25, 200, 25, 150, 10) 
+rocket_2 = Player("rocket_1.png", 550, 200, 25, 150, 10) 
+ball = GameSprite("ball.png",  200, 200, 50, 50, 10)
 
 speed_x = 5
 speed_y = 5
@@ -66,6 +72,7 @@ while game:
         if sprite.collide_rect(rocket_1, ball) or sprite.collide_rect(rocket_2, ball):
             speed_x *= -1
             speed_y *= 1
+            tuk.play()
         if ball.rect.y > win_height-50 or ball.rect.y < 0:
             speed_y *= -1
         if ball.rect.x < 0:
